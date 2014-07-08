@@ -1,0 +1,33 @@
+<form>
+    <div class="ngdialog-message">
+        <h3>Select Values</h3>
+        <div class="ngdialog-input">
+            <label>名称：</label>
+            <input type="text" ng-model="etlOptInfo[optInfo.key].name" />
+        </div>
+        <table ng-table="tableParams" class="table">
+            <tr ng-repeat="it in etlOptInfo[optInfo.key].tables.selected">
+                <td data-title="'字段名'">
+                    <span ng-if="!it.$edit">{{it.name}}</span>
+                    <div ng-if="it.$edit">
+                        <select ng-model="it.name" ng-options="field.name as field.name for field in etlOptInfo[optInfo.key].tables.group_fields"></select>
+                    </div>
+                </td>
+                <td data-title="'重命名字段'">
+                    <span ng-if="!it.$edit">{{it.rename}}</span>
+                    <div ng-if="it.$edit">
+                        <input type="text" ng-model="it.rename" />
+                    </div>
+                </td>
+                <td data-title="'操作'" width="100">
+                    <a ng-if="!it.$edit" href="" class="btn btn-default btn-xs" ng-click="it.$edit = true">编辑</a>
+                    <a ng-if="it.$edit" href="" class="btn btn-primary btn-xs" ng-click="it.$edit = false">保存</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()">取消</button>
+        <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="save()">确定</button>
+    </div>
+</form>

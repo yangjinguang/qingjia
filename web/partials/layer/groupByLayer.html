@@ -1,0 +1,61 @@
+<form>
+    <div class="ngdialog-message">
+        <h3>Group By</h3>
+        <div class="ngdialog-input">
+            <label>名称：</label>
+            <input type="text" ng-model="etlOptInfo[optInfo.key].name" />
+        </div>
+        <p>group字段</p>
+        <table ng-table="" class="table">
+            <tr ng-repeat="it in etlOptInfo[optInfo.key].groups.selected">
+                <td data-title="'字段名'" width="100">
+                    <span ng-if="!it.$edit">{{it.name}}</span>
+                    <div ng-if="it.$edit">
+                        <select ng-model="it.name" ng-options="field.name as field.name for field in etlOptInfo[optInfo.key].groups.group_fields"></select>
+                    </div>
+                </td>
+                <td data-title="'操作'" width="100">
+                    <a ng-if="!it.$edit" href="" class="btn btn-default btn-xs" ng-click="it.$edit = true">编辑</a>
+                    <a ng-if="it.$edit" href="" class="btn btn-primary btn-xs" ng-click="it.$edit = false">保存</a>
+                </td>
+            </tr>
+        </table>
+        <p>新字段</p>
+        <table ng-table="" class="table">
+            <tr ng-repeat="it in etlOptInfo[optInfo.key].aggregates">
+                <td data-title="'字段名'">
+                    <span ng-if="!it.$edit">{{it.name}}</span>
+                    <div ng-if="it.$edit">
+                        <input type="text" ng-model="it.name" />
+                    </div>
+                </td>
+                <td data-title="'Subject'" width="100">
+                    <span ng-if="!it.$edit">{{it.subject}}</span>
+                    <div ng-if="it.$edit">
+                        <select ng-model="it.subject" ng-options="field.name as field.name for field in etlOptInfo[optInfo.key].groups.group_fields"></select>
+                    </div>
+                </td>
+                <td data-title="'Type'">
+                    <span ng-if="!it.$edit">{{it.type}}</span>
+                    <div ng-if="it.$edit">
+                        <select ng-model="it.type">
+                            <option value="sum" ng-selected = "it.type == 'sum'">sum</option>
+                            <option value="mean" ng-selected = "it.type == 'mean'">mean</option>
+                            <option value="min" ng-selected = "it.type == 'min'">min</option>
+                            <option value="max" ng-selected = "it.type == 'max'">max</option>
+                            <option value="count" ng-selected = "it.type == 'count'">count</option>
+                        </select>
+                    </div>
+                </td>
+                <td data-title="'操作'" width="100">
+                    <a ng-if="!it.$edit" href="" class="btn btn-default btn-xs" ng-click="it.$edit = true">编辑</a>
+                    <a ng-if="it.$edit" href="" class="btn btn-primary btn-xs" ng-click="it.$edit = false">保存</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()">取消</button>
+        <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="save()">确定</button>
+    </div>
+</form>

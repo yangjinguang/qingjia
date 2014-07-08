@@ -1,0 +1,81 @@
+<div hz-nav></div>
+<div class="oa-body">
+    <div class="panel panel-default userinfo-panel">
+        <div class="panel-heading">
+            <h4 class="pull-left">个人设置</h4>
+            <button type="button" class="btn btn-default pull-right" ng-click="save()">保存</button>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal" dg-model="userinfo">
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 control-label">帐号:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{userinfo.username}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="display_name" class="col-sm-2 control-label">全名:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{userinfo.display_name}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">邮箱:</label>
+                    <div class="col-sm-10">
+                        <p class="form-control-static">{{userinfo.email}}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">性别:</label>
+                    <div class="col-xs-2">
+                        <select class="form-control" ng-model="userProfile.sex" ng-options="opt.id as opt.name for opt in sexOps" ></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">手机号:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ng-model="userProfile.phone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="birth-date" class="col-sm-2 control-label">生日:</label>
+                    <div class="col-sm-3">
+                        <div class="input-group" ng-controller="datepckerBirthday">
+                            <input type="text" class="form-control" datepicker-popup="{{dateFormat}}" ng-model="userProfile.birthday" is-open="opened" min-date="minDate" max-date="maxDate"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="birth-date" class="col-sm-2 control-label">入职时间:</label>
+                    <div class="col-sm-3">
+                        <div class="input-group" ng-controller="datepckerEntrytime">
+                            <input type="text" class="form-control" datepicker-popup="{{dateFormat}}" ng-model="userProfile.entry_time" is-open="opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">部门:</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" ng-model="userProfile.department" ng-options="opt.id as opt.name for opt in departmentOps" ></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">职位:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ng-model="userProfile.position">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

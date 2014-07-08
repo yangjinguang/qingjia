@@ -1,0 +1,127 @@
+<div hz-nav></div>
+<div class="oa-body well">
+    <div admin-nav></div>
+    <div class="user-list">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span>用户列表</span>
+                <button class="btn btn-default btn-xs pull-right" ng-hide="selectAllSt" ng-click="selectAll(1)">全选</button>
+                <button class="btn btn-default btn-xs pull-right" ng-show="selectAllSt" ng-click="selectAll(0)">全不选</button>
+            </div>
+            <div class="panel-body">
+                <div class="user-op-btn">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" ng-click="addTx()">调休</button>
+                    </div>
+                </div>
+
+                <div class="user-ft-btn">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="userFt">
+                        <div class="input-group-btn" dropdown is-open="dpDropOpen">
+                            <button type="button" class="btn btn-default dropdown-toggle">{{departmentsDic[thisDpId]}} <b class="caret"></b></button>
+                            <ul class="dropdown-menu">
+                                <li ng-click="dpChange(0)"><a>全部</a></li>
+                                <li ng-repeat="dp in departments" ng-click="dpChange(dp.id)"><a>{{dp.name}}</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+                </div>
+                <ul class="user-card">
+                    <li ng-repeat="user in users | filter:userFt" ng-class="{true:'li-active',false:''}[user.userSelect==1]">
+                        <span class="select-block" ng-click="selectBlock(user.user_id)" ng-class="{active:user.userSelect==1}"></span>
+                        <div class="card-info" ng-click="userClick(user.user_id)">
+                            <span class="glyphicon glyphicon-user" ng-class="{true:'girl',false:''}[user.sex==1]"></span>
+                            <span class="glyphicon-class">
+                                <p>{{user.display_name}}</p>
+                                <p>{{user.position}}</p>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info user-info">
+        <h5 class="pull-left">用户详细信息</h5>
+        <button class="btn btn-primary btn-sm pull-right" ng-hide="userEdit" ng-click="userChange()">修改</button>
+        <button class="btn btn-primary btn-sm pull-right" ng-show="userEdit" ng-click="userSave()">保存</button>
+        <div class="clearfix"></div>
+        <hr>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">姓名</label>
+                <div class="col-sm-3">
+                    <p class="form-control-static">{{showWell.display_name}}</p>
+                </div>
+                <label class="col-sm-2 control-label">性别</label>
+                <div class="col-sm-3">
+                    <p class="form-control-static" ng-hide="userEdit">
+                        <span ng-show="showWell.sex == 0">男</span>
+                        <span ng-show="showWell.sex == 1">女</span>
+                    </p>
+                    <select class="form-control" ng-show="userEdit" ng-model="userProfile.sex" ng-options="opt.id as opt.name for opt in sexOps"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">部门</label>
+                <div class="col-sm-3">
+                    <p class="form-control-static" ng-hide="userEdit">{{departmentsDic[showWell.department]}}</p>
+                    <select class="form-control" ng-show="userEdit" ng-model="userProfile.department" ng-options="opt.id as opt.name for opt in departments" ></select>
+                </div>
+                <label class="col-sm-2 control-label">职位</label>
+                <div class="col-sm-4">
+                    <p class="form-control-static" ng-hide="userEdit">{{showWell.position}}</p>
+                    <input class="form-control" ng-show="userEdit" ng-model="userProfile.position"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">手机</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" ng-hide="userEdit">{{showWell.phone}}</p>
+                    <input class="form-control" ng-show="userEdit" ng-model="userProfile.phone"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">入职日期</label>
+                <div class="col-sm-5">
+                    <p class="form-control-static" ng-hide="userEdit">{{showWell.entry_time}}</p>
+                        <div class="input-group" ng-show="userEdit" ng-controller="datepckerEntrytime">
+                            <input type="text" class="form-control" datepicker-popup="{{dateFormat}}" ng-model="userProfile.entry_time" is-open="opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Email</label>
+                <div class="col-sm-3">
+                    <p class="form-control-static">{{showWell.email}}</p>
+                </div>
+            </div>
+        </form>
+        <hr></hr>
+        <h5>剩余的各类型假期天数:</h5>
+        <table class="">
+            <tr>
+                <td ng-repeat="type in daysSum.daysSp">
+                    <span>{{type.name}}:</span>
+                    <span ng-show="type.days<300">{{type.days}}</span>
+                    <span ng-show="type.days>=300">-</span>
+                </td>
+            </tr>
+        </table>
+        <hr></hr>
+        <h5>本年度总共请假天数: {{daysSum.daysUseSum}}</h5>
+        <table class="">
+            <tr>
+                <td ng-repeat="type in daysSum.daysUse">
+                    <span>{{type.name}}:</span>
+                    <span>{{type.days}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+<div class="clearfix"></div>
+</div>

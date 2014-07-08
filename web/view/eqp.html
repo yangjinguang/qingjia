@@ -1,0 +1,46 @@
+<div hz-nav></div>
+<div class="oa-body">
+    <div class="panel panel-default userinfo-panel">
+        <div class="panel-heading">
+            <h4 class="pull-left">设备列表</h4>
+            <div class="pull-right">
+                <button class="btn btn-default" type="button" ng-controller="addEqpModalCtrl">
+                    <span class="glyphicon glyphicon-plus" ng-click="open()">添加设备</span>
+                </button>
+            </div>
+            <div class="col-lg-4 pull-right">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="searchStr">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-4 -->
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>类型</th>
+                        <th>型号</th>
+                        <th>使用者</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                    <tr ng-repeat="eqp in eqpInfo | filter:searchStr">
+                        <td>{{eqp.sn}}</td>
+                        <td>{{eqp.type}}</td>
+                        <td>{{eqp.name}}</td>
+                        <td>{{eqp.user}}</td>
+                        <td>
+                            <button class="btn btn-default btn-xs" ng-click="eqpEdit(eqp.id)">修改</button>
+                        </td>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

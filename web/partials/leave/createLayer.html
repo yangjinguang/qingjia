@@ -1,0 +1,88 @@
+<div class="modal-header">
+    <h3 class="modal-title">休假申请</h3>
+</div>
+<div class="modal-body">
+    <div id="leave-input">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">开始日期</label>
+                <div class="col-sm-4">
+                    <div class="input-group" ng-controller="datepcker" ng-class="{true:'has-error',false:''}[errFlag.item=='begin']">
+                        <input type="text" class="form-control" readonly datepicker-popup="{{dateFormat}}" ng-model="order.begin" ng-change="beginChange()" is-open="opened" min-date="minDate" max-date="maxDate"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="order.beginHalf" ng-click="halfCheck('begin','AM')" btn-radio="'AM'">上午</label>
+                        <label class="btn btn-primary" ng-model="order.beginHalf" ng-click="halfCheck('begin','PM')" btn-radio="'PM'">下午</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{true:'has-error',false:''}[errFlag.item=='end']">
+                <label class="col-sm-2 control-label">结束日期</label>
+                <div class="col-sm-4">
+                    <div class="input-group" ng-controller="datepcker"> 
+                        <input type="text" class="form-control" readonly datepicker-popup="{{dateFormat}}" ng-model="order.end" ng-change="endChange()" is-open="opened" min-date="order.begin" max-date="maxDate"  datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="order.endHalf" ng-click="halfCheck('end','AM')" btn-radio="'AM'">上午</label>
+                        <label class="btn btn-primary" ng-model="order.endHalf" ng-click="halfCheck('end','PM')" btn-radio="'PM'">下午</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">类型</label>
+                <div class="col-sm-5" ng-class="{'has-warning':dateDaysSum()-typeDaysSum()>0,'has-success':dateDaysSum()-typeDaysSum()==0,'has-error':dateDaysSum()-typeDaysSum()<0}">
+                    <span class="form-control">
+                        共: {{dateDaysSum() >=0 ? dateDaysSum():0}}天,剩余可分配: {{dateDaysSum()-typeDaysSum()}}
+                    </span>
+                </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" ng-click="typeListAdd()">
+                        <span class="glyphicon glyphicon-plus"></span> 
+                    </button>
+                </div>
+            </div>
+            <div ng-repeat="type in order.typeList">
+                <div class="form-group" ng-class="{true:'has-error',false:''}[errFlag.item=='typeList']">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <select class="btn btn-default btn-select" ng-model="type.type_id" ng-change="typeDaysChange(type.type_id,type.days)" ng-options="opt.id as opt.name for opt in leaveType">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <input type="number" class="form-control" ng-model="type.days" ng-change="typeDaysChange(type.type_id,type.days)" min="0.5" step="0.5">
+                            <span class="input-group-addon">天</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <button type="button" class="btn btn-danger" ng-show="type.id != 0" ng-click="typeListRm(type.id)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{true: 'has-error', false: ''}[errFlag.item=='note']">
+                <label class="col-sm-2 control-label">理由</label>
+                <div class="col-sm-7">
+                    <textarea class="form-control" ng-model="order.note" ng-change="noteChange()" rows="3"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="alert alert-danger" ng-show="errFlag.item">{{errFlag.errMsg}}</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">保存</button>
+    <button class="btn btn-warning" ng-click="cancel()">取消</button>
+</div>

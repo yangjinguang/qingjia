@@ -1,0 +1,53 @@
+    <form>
+        <div class="ngdialog-message clearfix">
+            <h3>Join</h3>
+            <div class="ngdialog-input">
+                <label>名称：</label>
+                <input type="text" ng-model="etlOptInfo[optInfo.key].name" />
+            </div>
+            <div class="ngdialog-input">
+                <label>左表：</label>{{etlOptInfo[optInfo.key].tables.firstSelect}}
+                <select ng-model="etlOptInfo[optInfo.key].tables.firstSelect.tb_id" ng-options="table.tb_id as table.tb_name for table in etlOptInfo[optInfo.key].tables.table_list"></select>
+            </div>
+            <div class="ngdialog-input">
+                <label>右表：</label>{{etlOptInfo[optInfo.key].tables.secondSelect}}
+                <select ng-model="etlOptInfo[optInfo.key].tables.secondSelect.tb_id" ng-options="table.tb_id as table.tb_name for table in etlOptInfo[optInfo.key].tables.table_list"></select>
+            </div>
+            <div class="ngdialog-input">
+                <label>Join类型：</label>
+                <select ng-model="etlOptInfo[optInfo.key].join_type">
+                    <option value="union" ng-selected = "etlOptInfo[optInfo.key].join_type == 'union'">union</option>
+                    <option value="inner" ng-selected = "etlOptInfo[optInfo.key].join_type == 'inner'">inner</option>
+                    <option value="left" ng-selected = "etlOptInfo[optInfo.key].join_type == 'left'">left</option>
+                    <option value="right" ng-selected = "etlOptInfo[optInfo.key].join_type == 'right'">right</option>
+                </select>
+            </div>
+            <table ng-table="" class="table fl">
+                <tr ng-repeat="it in etlOptInfo[optInfo.key].key_first">
+                    <td data-title="'keyField'">
+                        <span ng-if="!it.$edit">{{it.field_name}}</span>
+
+                    </td>
+                    <td data-title="'操作'" width="100">
+                        <a ng-if="!it.$edit" href="" class="btn btn-default btn-xs" ng-click="it.$edit = true">编辑</a>
+                        <a ng-if="it.$edit" href="" class="btn btn-primary btn-xs" ng-click="it.$edit = false">保存</a>
+                    </td>
+                </tr>
+            </table>
+            <table ng-table="" class="table fr">
+                <tr ng-repeat="it in etlOptInfo[optInfo.key].key_second">
+                    <td data-title="'keyField'">
+                        <span ng-if="!it.$edit">{{it.field_name}}</span>
+                    </td>
+                    <td data-title="'操作'" width="100">
+                        <a ng-if="!it.$edit" href="" class="btn btn-default btn-xs" ng-click="it.$edit = true">编辑</a>
+                        <a ng-if="it.$edit" href="" class="btn btn-primary btn-xs" ng-click="it.$edit = false">保存</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="ngdialog-buttons">
+            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()">取消</button>
+            <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="save()">确定</button>
+        </div>
+    </form>

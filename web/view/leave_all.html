@@ -1,0 +1,54 @@
+<div hz-nav></div>
+<div class="oa-body well">
+    <div class="page-header">
+        <h4>查看所有休假申请</h4>
+    </div>
+    <div class="pull-left w20">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">年份:</label> 
+                <div class="col-sm-7">
+                    <select class="form-control" ng-model="thisYear" ng-change="yearChange()" ng-options="opt for opt in yearOps"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">状态:</label> 
+                <div class="col-sm-7">
+                    <select class="form-control" ng-model="thisStatus"  ng-options="opt.id as opt.name for opt in statusOps"></select>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="pull-right w80">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>开始日期</th>
+                    <th>结束日期</th>
+                    <th>天数</th>
+                    <th>提交日期</th>
+                    <th>审批状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in leaves | filter:thisStatus">
+                    <td>{{order.begin + ' ' + translate(order.beginHalf)}}</td>
+                    <td>{{order.end + ' ' + translate(order.endHalf)}}</td>
+                    <td>{{order.days}}</td>
+                    <td>{{order.ctime}}</td>
+                    <td>
+                        <p ng-show="{{order.status==0}}" class="text-primary">未审核</p>
+                        <p ng-show="{{order.status==1}}" class="text-success">通过</p>
+                        <p ng-show="{{order.status==2}}" class="text-danger">驳回</p>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-xs" ng-click="orderInfo('',0,order)">详细</button>
+                        <button ng-hide="{{order.status==1}}" class="btn btn-warning btn-xs" ng-click="orderRm(order.id)">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+</div>

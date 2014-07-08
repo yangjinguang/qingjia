@@ -1,0 +1,43 @@
+﻿.l-wrap {
+    position:fixed;
+    width:100%;
+    height:100%;
+}
+.l-card {
+    position:relative;
+    top:20%;
+    width:450px;
+    height: 250px;
+    margin:auto;
+    border: solid 1px #ddd;
+    background-color:#fff;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+}
+.l-title {
+    background-color:#3276b1;
+    text-align: center;
+    height: 40px;
+}
+.l-title p {
+    color:#fff;
+    padding-top:5px;
+    font-size: 20px
+}
+.l-form {
+    width:300px;
+    margin-top:20px;
+    margin-right:auto;
+    margin-left:auto;
+}
+.oa-nav {
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+.oa-body {
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+}

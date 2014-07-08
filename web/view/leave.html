@@ -1,0 +1,127 @@
+<div hz-nav></div>
+<div class="oa-body well">
+    <div class="pull-left leave-left">
+        <div class="alert alert-info">
+            <h3>
+                {{userinfo.display_name}},欢迎您!
+                <div class="pull-right">
+                    <p>
+                        <button class="btn btn-primary" ng-click="createLeaveBtn()">休假申请</button>
+                    </p>
+                </div>
+            </h3>
+            <hr></hr>
+            <h5>剩余的各类型假期天数:</h5>
+            <table class="">
+                <tr>
+                    <td ng-repeat="type in daysSum.daysSp">
+                        <span>{{type.name}}:</span>
+                        <span ng-show="type.days<300">{{type.days}}</span>
+                        <span ng-show="type.days>=300">-</span>
+                    </td>
+                </tr>
+            </table>
+            <hr></hr>
+            <h5>本年度总共请假天数: {{daysSum.daysUseSum}}</h5>
+            <table class="">
+                <tr>
+                    <td ng-repeat="type in daysSum.daysUse">
+                        <span>{{type.name}}:</span>
+                        <span>{{type.days}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">我提交的</div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>开始日期</th>
+                            <th>结束日期</th>
+                            <th>天数</th>
+                            <th>提交日期</th>
+                            <th>审批状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="order in myLeaveOrder">
+                            <td>{{order.begin + ' ' + translate(order.beginHalf)}}</td>
+                            <td>{{order.end + ' ' + translate(order.endHalf)}}</td>
+                            <td>{{order.days}}</td>
+                            <td>{{order.ctime}}</td>
+                            <td>
+                                <p ng-show="{{order.status==0}}" class="text-primary">未审核</p>
+                                <p ng-show="{{order.status==1}}" class="text-success">通过</p>
+                                <p ng-show="{{order.status==2}}" class="text-danger">驳回</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-xs" ng-click="orderInfo('',0,order)">详细</button>
+                                <button ng-hide="{{order.status==1}}" class="btn btn-warning btn-xs" ng-click="orderRm(order.id)">删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>只限本月,若要查看所有记录,请点击<a href="/index.html#/leaveall">>></a></p>
+            </div>
+        </div>
+        <div class="panel panel-primary" ng-show="userinfo.isLeader">
+            <div class="panel-heading">提交给我的</div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>提交人</th>
+                            <th>开始日期</th>
+                            <th>结束日期</th>
+                            <th>天数</th>
+                            <th>提交日期</th>
+                            <th>审批状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="order in orderForMe">
+                            <td>{{order.name}}</td>
+                            <td>{{order.begin + ' ' + translate(order.beginHalf)}}</td>
+                            <td>{{order.end + ' ' + translate(order.endHalf)}}</td>
+                            <td>{{order.days}}</td>
+                            <td>{{order.ctime}}</td>
+                            <td>
+                                <p ng-show="{{order.status==0}}" class="text-primary">未审核</p>
+                                <p ng-show="{{order.status==1}}" class="text-success">通过</p>
+                                <p ng-show="{{order.status==2}}" class="text-danger">驳回</p>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-xs" ng-click="orderInfo('',1,order)">审核</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="pull-right leave-right">
+    <div class="leave-tools">
+        <iframe width="450" scrolling="no" height="70" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=2&color=%23&icon=3&num=3"></iframe>
+    </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">最近的请假</div>
+            <div class="panel-body">
+                <table class="table table-condensed">
+                    <tr ng-repeat="order in allLeave">
+                        <td>
+                        <strong class="text-success">{{order.name}}</strong>从
+                        <strong class="text-success">{{order.begin + ' ' + translate(order.beginHalf)}}</strong>到
+                        <strong class="text-success">{{order.end + ' ' + translate(order.endHalf)}}</strong>请假
+                        <strong class="text-warning">{{order.days}}</strong>天
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<div class="clearfix"></div>
+</div>

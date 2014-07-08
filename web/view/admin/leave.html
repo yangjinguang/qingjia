@@ -1,0 +1,26 @@
+<div hz-nav></div>
+<div class="oa-body well">
+    <div admin-nav></div>
+<div class="admin-leave">
+    <div class="page-header">
+        <h4>查看用户休假记录</h4>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th ng-repeat="type in types">{{type.name}}</th>
+                <th>总计</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in leaveStat">
+                <td>{{user.name}}</td>
+                <td ng-repeat="type in types">{{user[type.id]}} 天</td>
+                <td>{{user.daysSum}} 天</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="clearfix"></div>
+</div>

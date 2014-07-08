@@ -1,0 +1,23 @@
+<div class="oa-nav">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">海智</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li ng-class="{active:navTab==0}"><a href="javascript:;" ng-click="selectNav(0)">休假管理</a></li>
+                <!--<li ng-class="{active:navTab==1}"><a href="javascript:;" ng-click="selectNav(1)">设备资产</a></li>-->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" on-toggle="toggled(open)">
+                    <a href class="dropdown-toggle">{{userinfo.display_name}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/index.html#/userinfo">个人信息</a></li>
+                        <li ng-show="userinfo.isHr"><a href="/index.html#/admin">后台管理</a></li>
+                    </ul>
+                </li>
+                <li><a href="javascript:;" ng-controller="logoutCtrl" ng-click="logout()">退出</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+</div>

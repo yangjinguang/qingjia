@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">调休</h3>
+</div>
+<div class="modal-body">
+    <form role="form">
+        <div class="form-group">
+            <label>
+                <p>为<span ng-repeat="user in selectUsers">{{user.display_name}},</span>增加调休:</p>
+            </label>
+            <div class="input-group col-sm-3">
+                <input type="number" class="form-control" ng-model="data.txDays" min="0.5" step="0.5" ng-change="txDaysCheck()">
+                <span class="input-group-addon">天</span>
+            </div>
+        </div>
+    </form>
+<div class="alert alert-danger" ng-show="errFlag.item">{{errFlag.errMsg}}</div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">确定</button>
+    <button class="btn btn-warning" ng-click="cancel()">取消</button>
+</div>
